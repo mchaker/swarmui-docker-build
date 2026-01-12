@@ -1,0 +1,25 @@
+when:
+  - event: [push, manual, cron]
+    cron: daily_5am
+    branch: main
+
+steps:
+  - name: checkout
+    image: woodpeckerci/plugin-git
+    commands:
+      - git clone https://github.com/mcmonkeyprojects/SwarmUI.git
+
+  - name: publish
+    image: woodpeckerci/plugin-kaniko
+    settings:
+      context: ./SwarmUI
+      dockerfile: launchtools/StandardDockerfile.docker
+      registry: 'registry-proxy.woodpecker.svc.cluster.local'
+      insecure: true
+      repo: swarmui
+      tags: gpugarden
+      username:
+        from_secret: docker-username
+      password:
+        from_secret: docker-password
+
