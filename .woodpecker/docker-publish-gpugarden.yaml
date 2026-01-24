@@ -9,7 +9,7 @@ steps:
     commands:
       - git clone https://github.com/mcmonkeyprojects/SwarmUI.git
 
-  - name: publish
+  - name: build and publish
     image: woodpeckerci/plugin-kaniko
     settings:
       context: ./SwarmUI
